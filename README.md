@@ -1,4 +1,8 @@
+# Intro
+
 This is repository designed as a sandbox to play with d3 and other visualization tools
+
+# Sources
 
 I'm following the recomendaitons from:
 https://blog.modeanalytics.com/learn-d3/
