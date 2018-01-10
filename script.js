@@ -6,5 +6,5 @@ svg=d3.select("#chart") //css selector refering to the html object with an id at
  
 var text=svg
 .append("text")
-.text("hello world")
+.text("hello world, check me out in the developer consol")
 .attr("y",50);
