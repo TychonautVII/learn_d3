@@ -70,6 +70,5 @@ newRects.append('rect')
   .attr('height', y.bandwidth())
   .attr('width', function(d, i) {
     return x(d.count);
-  }); // Adds all rect's because rects are currently new
+  });
 
-console.log("Lets do stuff ");
