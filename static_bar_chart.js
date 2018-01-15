@@ -48,7 +48,7 @@ var y = d3.scaleBand()
 width="701";
 height="240";
 
-var svg = d3.select('#wrapper');
+var svg = d3.select('#chart');
 svg.attr("width",width)
     .attr("height",height)
 
@@ -57,10 +57,11 @@ svg.attr("width",width)
 // ----------------------------------------
 // Binding the Data
 // ----------------------------------------
-var rects = svg.selectAll('rect')
-  .data(sales); // size of rects is intially zero, because no rects have been added
+var rects = svg.selectAll('rect').data(sales); // this is a data join between rect and sales
+// size of rects is intially zero, because no rects have been added
 
-var newRects = rects.enter(); //
+
+var newRects = rects.enter(); // Creates these element-less datapoints
 
 newRects.append('rect')
   .attr('x', x(0))

@@ -13,54 +13,85 @@ npm is a package manager for the JavaScript programming language
 
  */
 
+var d3 = require("d3"),
+    jsdom = require("jsdom");
+
+var document = jsdom.jsdom(),
+    svg = d3.select(document.body).append("svg");
+
+
+
+
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = 'https://d3js.org/d3.v4.min.js"';
+document.head.appendChild(script)
+
 // ----------------------------------------
 //  Getting the Data
 // ----------------------------------------
 
-var sales = [
-  { product: 'Hoodie',  count: 7 },
-  { product: 'Jacket',  count: 6 },
-  { product: 'Snuggie', count: 9 },
+var sales1 = [
+    { product: 'Hoodie', count: 7 },
+    { product: 'Jacket', count: 6 }
 ];
 
-// ----------------------------------------
-// Setting Up the scales d3 objects
-// ----------------------------------------
+var sales2 = [
+    { product: 'Jacket',  count: 6 }, // same
+    { product: 'Snuggie', count: 9 }  // new
+];
 
-var maxCount = d3.max(sales, function(d, i) {
-  return d.count;
-});
-
-var x = d3.scaleLinear()
-  .range([0, 300]) //Range is in pixel space
-  .domain([0, maxCount]); // Domain is in data space
-
-var y = d3.scaleBand()
-    .domain(['Hoodie','Jacket','Snuggie'])
-    .range([0, 75])
-    .paddingInner(0.1);
 
 
 // ----------------------------------------
 // Sizing the Chart
 // ----------------------------------------
 
-width="701";
+width="705";
 height="240";
 
-var svg = d3.select('#wrapper');
+var svg = d3.select('#chart');
 svg.attr("width",width)
-    .attr("height",height)
+    .attr("height",height);
+
+
+
 
 
 
 // ----------------------------------------
 // Binding the Data
 // ----------------------------------------
-var rects = svg.selectAll('rect')
-  .data(sales); // size of rects is intially zero, because no rects have been added
+var rects = svg.selectAll('rect').data(sales1, function(d, i) { return d.product; } );
+// this is a data join between rect and sales, with key function that returns the product
 
-var newRects = rects.enter(); //
+rects.enter().append('rect');
+
+var nextrects = rects
+    .data(sales2, function(d, i) { return d.product; });
+
+nextrects.exit().remove(); // gets rid of the one overlapping element
+
+nextrects.enter().append('rect'); // adds one element
+
+
+
+// ----------------------------------------
+// Setting Up the scales d3 objects
+// ----------------------------------------
+
+var maxCount = d3.max(sales, function(d, i) {
+    return d.count;
+});
+
+var x = d3.scaleLinear()
+    .range([0, width]) //Range is in pixel space
+    .domain([0, maxCount]); // Domain is in data space
+
+var y = d3.scaleBand()
+    .domain(sales.map(function(d, i) {return d.product;}))
+    .range([0, height])
+    .paddingInner(0.1);
 
 newRects.append('rect')
   .attr('x', x(0))
@@ -72,4 +103,10 @@ newRects.append('rect')
     return x(d.count);
   }); // Adds all rect's because rects are currently new
 
+// ----------------------------------------
+// Adding some Dynamic Elements
+// ----------------------------------------
+
+// Where selection.enter() selects elements that have added since the last data join,
+// selection.exit() is the opposite, it applies to elements that have been removed.
 console.log("Lets do stuff ");
