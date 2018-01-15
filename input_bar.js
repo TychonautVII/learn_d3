@@ -19,17 +19,7 @@ width=300 - margin.left - margin.right;
 height=700 - margin.top - margin.bottom;
 
 // ----------------------------------------
-//  Getting the Data
-// ----------------------------------------
-
-var sales = [
-  { product: 'Hoodie',  count: 7 },
-  { product: 'Jacket',  count: 6 },
-  { product: 'Snuggie', count: 9 },
-];
-
-// ----------------------------------------
-// Setting Up the scales d3 objects
+// Setting Up the Scales
 // ----------------------------------------
 
 var x = d3.scaleBand()
@@ -40,16 +30,9 @@ var y = d3.scaleLinear()
   .range([height, 0]); //Range is in pixel space, reversed because high down in svg
 
 
-
-// ----------------------------------------
-// Axes
-// ----------------------------------------
-
-
 // ----------------------------------------
 // Sizing and Placing the Chart
 // ----------------------------------------
-
 
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -58,6 +41,15 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
+// ----------------------------------------
+//  Getting the Data
+// ----------------------------------------
+
+var sales = [
+    { product: 'Hoodie',  count: 7 },
+    { product: 'Jacket',  count: 6 },
+    { product: 'Snuggie', count: 9 },
+];
 
 
 // ----------------------------------------
@@ -70,7 +62,8 @@ y.domain([0, d3.max(sales, function(d) { return d.count; })]);
 
 svg.selectAll(".bar")
     .data(sales)
-    .enter().append("rect")
+    .enter()
+    .append("rect")
     .attr("class", "bar")
     .attr("x", function(d) {return x(d.product);})
     .attr("width", x.bandwidth() )
@@ -80,9 +73,6 @@ svg.selectAll(".bar")
 // ----------------------------------------
 // Sizing and Placing the Chart
 // ----------------------------------------
-
-//If the domain code is down here it does work
-
 
 // add the x Axis
 svg.append("g")

@@ -4,14 +4,14 @@ This is repository designed as a sandbox to play with d3 and other visualization
 
 # Sources
 
-I'm following the recomendaitons from:
-https://blog.modeanalytics.com/learn-d3/
-
-Starting with:
+Starting with as an intro to some basic front end tech in a d3 context:
 http://www.jeromecukier.net/blog/2012/09/04/getting-to-hello-world-with-d3/
 
-Moving onto:
+This is introduces the concepts of d3 well, but is a little dated and d3 v3 focused: 
 https://square.github.io/intro-to-d3/web-standards/
+
+Blog Posts on D3 v4:
+http://rajapradhan.com/blogs/d3-js-v4-essentials/
 
 # File Explaination
 
