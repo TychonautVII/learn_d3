@@ -1,7 +1,6 @@
 # Intro
 This is repository designed as a sandbox to play with javascript, primarily to get up and running with d3 and other visualization libs
 
-
 # Sources
 
  ## Introductory Material
@@ -27,7 +26,6 @@ http://campus.codeschool.com/courses/shaping-up-with-angularjs/level/3/section/1
 https://github.com/d3/d3/wiki/Tutorials
 http://rajapradhan.com/blogs/d3-js-v4-essentials/
 https://medium.com/netscape/visualizing-data-with-angular-and-d3-209dde784aeb
-
 
 # TODO 
 I'll ultimately host something on a my github page. https://pages.github.com/ 
