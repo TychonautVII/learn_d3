@@ -4,7 +4,7 @@ This is repository designed as a sandbox to play with javascript, primarily to g
 # Sources
 
  ## Introductory Material
-Starting with as an intro to some basic front end tech in a d3 context:
+I started with an intro to some basic front end tech in a d3 context:
 http://www.jeromecukier.net/blog/2012/09/04/getting-to-hello-world-with-d3/
 
 This is introduces the concepts of d3 well, but is a little dated and d3 v3 focused: 
@@ -18,7 +18,7 @@ I consulted the following resources, and ultimately chose angular:
 https://da-14.com/blog/5-best-javascript-frameworks-2017
 http://www.adeveloperdiary.com/react-js/integrate-react-and-d3/
 
-I used codeschool to learn angular:
+I used codeschool to learn enough angular for my needs:
 http://campus.codeschool.com/courses/shaping-up-with-angularjs/level/3/section/1/video/1
 
 
@@ -37,8 +37,10 @@ I use ECMAScript 6 to have scope, and avoid declaration hoisting
 Install home-brew 
 https://github.com/Homebrew/install
 
+```bash
 brew install node
 brew install npm
 npm install d3 --save
 npm install @types/d3 --save-dev
+```
 
