@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app = "store">
+ <head>
+     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"> <!-- Specifies the Encoding of the Page -->
+     <title>Learn Angular</title>
+     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+     <script src="https://d3js.org/d3.v4.min.js"></script>
+     <link href="style.css" rel="stylesheet">  <!-- Refers to the style sheet file located in thi-->
+ </head>
+ <body>
+
+     <div ng-controller= "StoreController as store"
+          ng-hide = "store.product.soldOut">  <!-- controller name with alias store-->
+         <h1> {{store.product.name }} </h1>
+         <h1> {{store.product.price }} </h1>
+         <p> {{store.product.description }} </p>
+         <button ng-show = "store.product.canPurchase"> Add to Cart</button>  <!-- controller name with alias store-->
+
+         <!--Scope of the controller is within the div-->
+
+     </div>
+     <!-- <script src="script.js"> </script> Actually runs the javascript code -->
+     <script src="app.js"> </script> <!-- Actually runs the javascript code &ndash;&gt; -->
+     <!-- In more complicated examples with more complicated widgets, the html body gets more complex-->
+
+ </body>
+</html>

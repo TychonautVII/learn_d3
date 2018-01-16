@@ -16,6 +16,8 @@ https://square.github.io/intro-to-d3/web-standards/
 My Fav Javascript introduction:
 https://javascript.info/
 
+
+
 Blog Posts on D3 v4:
 https://github.com/d3/d3/wiki/Tutorials
 http://rajapradhan.com/blogs/d3-js-v4-essentials/
@@ -23,6 +25,20 @@ http://rajapradhan.com/blogs/d3-js-v4-essentials/
 # File Explaination
 
 The static_bar_chart.js file is the simplist d3 javascript file, that just shows the basics of d3 data joining
+
+# Java Script Framework
+I selected a javascript framework, primarily between angular and react, I consulted the following resources. 
+
+https://da-14.com/blog/5-best-javascript-frameworks-2017
+
+I ultimately went with angular
+
+https://medium.com/netscape/visualizing-data-with-angular-and-d3-209dde784aeb
+
+http://www.adeveloperdiary.com/react-js/integrate-react-and-d3/
+
+I used codeschool to learn angular:
+http://campus.codeschool.com/courses/shaping-up-with-angularjs/level/3/section/1/video/1
 
 # Development Configuration Info
 

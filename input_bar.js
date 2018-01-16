@@ -53,7 +53,6 @@ let sales = [
     { product: 'Snuggie', count: 9 },
 ];
 
-
 // ----------------------------------------
 // Binding the Data
 // ----------------------------------------
@@ -84,6 +83,7 @@ svg.append("g")
 // add the y Axis
 svg.append("g")
     .call(d3.axisLeft(y_scale));
+
 
 console.log("End of Program");
 
