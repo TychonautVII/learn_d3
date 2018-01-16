@@ -13,8 +13,8 @@ http://www.jeromecukier.net/blog/2012/09/04/getting-to-hello-world-with-d3/
 This is introduces the concepts of d3 well, but is a little dated and d3 v3 focused: 
 https://square.github.io/intro-to-d3/web-standards/
 
-Good Javascript introdcution:
-https://javascript.info/devtools
+My Fav Javascript introduction:
+https://javascript.info/
 
 Blog Posts on D3 v4:
 https://github.com/d3/d3/wiki/Tutorials
