@@ -9,16 +9,53 @@
  </head>
  <body>
 
-     <div ng-controller= "StoreController as store"
-          ng-hide = "store.product.soldOut">  <!-- controller name with alias store-->
-         <h1> {{store.product.name }} </h1>
-         <h1> {{store.product.price }} </h1>
-         <p> {{store.product.description }} </p>
-         <button ng-show = "store.product.canPurchase"> Add to Cart</button>  <!-- controller name with alias store-->
+     <div ng-controller= "StoreController as store">  <!-- controller name with alias store-->
+         <h4> Reviews </h4>
 
-         <!--Scope of the controller is within the div-->
+             <li class="list-group-item" ng-repeat="product in store.products">
+                 {{product.name}}
+
+                 <!-- -------------------------------- -->
+                 <!--Printing the Old Reviews-->
+                 <!-- -------------------------------- -->
+                 <blockquote ng-repeat="review in product.reviews">
+                     <b>Stars: {{review.stars}}</b>
+                     {{review.body}}
+                     <cite>by: {{review.author}}</cite>
+                 </blockquote>
+
+                 <!-- -------------------------------- -->
+                 <!--Entering and Printing a new review-->
+                 <!-- -------------------------------- -->
+                 <form name="reviewForm" ng-controller="ReviewController as reviewCtrl"
+                       ng-submit="reviewCtrl.addReview(product)">
+                     <blockquote>
+                         <b>Stars: {{reviewCtrl.review.stars}}</b>
+                         {{reviewCtrl.review.body}}
+                         <cite>by: {{reviewCtrl.review.author}}</cite>
+                     </blockquote>
+                     <select ng-model="reviewCtrl.review.stars">
+                         <option value="1">1 star</option>
+                         <option value="2">2 stars</option>
+                     </select>
+                     <textarea ng-model="reviewCtrl.review.body"></textarea>
+                     <label>by:</label>
+                     <input name = 'author' ng-model="reviewCtrl.review.author" type="email" />
+                     <input type="submit" value="Submit" />
+                 </form>
+
+             </li>
+
+
+
+
 
      </div>
+
+
+
+
+
      <!-- <script src="script.js"> </script> Actually runs the javascript code -->
      <script src="app.js"> </script> <!-- Actually runs the javascript code &ndash;&gt; -->
      <!-- In more complicated examples with more complicated widgets, the html body gets more complex-->
