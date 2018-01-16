@@ -4,80 +4,114 @@
 
     console.log("This Runs");
 
+    let margin = {top: 40, right: 20, bottom: 30, left: 40};
+
+    let width = 700 - margin.left - margin.right;
+    let height = 300 - margin.top - margin.bottom;
+
     app.controller('Plotter',function(){
         // ----------------------------------------
-        //  Init the Data
+        //  Function Defs
         // ----------------------------------------
-                this.sales = [
-                    { product: 'Hoodie',  count: 7 },
-                    { product: 'Jacket',  count: 6 },
-                    { product: 'Snuggie', count: 9 },
-                ];
 
-                this.plot = function(){
-                    let margin = {top: 40, right: 20, bottom: 30, left: 40};
+        this.init_plot = function() {
 
-                    let width= 700 - margin.left - margin.right;
-                    let height = 300 - margin.top - margin.bottom;
+            // ----------------------------------------
+            // Sizing and Placing the Chart
+            // ----------------------------------------
 
-                    // ----------------------------------------
-                    // Setting Up the Scales
-                    // ----------------------------------------
+            let svg = d3.select(".chart")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-                    let x_scale = d3.scaleBand()
-                        .range([0, width])
-                        .padding(0.1);
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")");
 
-                    let y_scale = d3.scaleLinear()
-                        .range([height, 0]); //Range is in pixel space, reversed because high down in svg
+            svg.append("g")
+                .attr("class", "y axis");
 
 
-                    // ----------------------------------------
-                    // Sizing and Placing the Chart
-                    // ----------------------------------------
+            return svg};
 
-                    let svg = d3.select("body").append("svg")
-                        .attr("width", width + margin.left + margin.right)
-                        .attr("height", height + margin.top + margin.bottom)
-                        .append("g")
-                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        this.update_plot = function(svg) {
 
-                    // ----------------------------------------
-                    // Binding the Data
-                    // ----------------------------------------
+            // ----------------------------------------
+            // Setting Up the Scales
+            // ----------------------------------------
 
-                    // Scale the range of the data in the domains
-                    x_scale.domain(this.sales.map(function(d) { return d.product; }));
-                    y_scale.domain([0, d3.max(this.sales, function(d) { return d.count; })]);
+            let x_scale = d3.scaleBand()
+                .range([0, width])
+                .padding(0.1);
 
-                    svg.selectAll(".bar")
-                        .data(this.sales)
-                        .enter()
-                        .append("rect")
-                        .attr("class", "bar")
-                        .attr("x", function(d) {return x_scale(d.product);})
-                        .attr("width", x_scale.bandwidth() )
-                        .attr("y", function(d) {return y_scale(d.count);})
-                        .attr("height", function(d) { return  height - y_scale(d.count); });
-
-                    // ----------------------------------------
-                    // Sizing and Placing the Chart
-                    // ----------------------------------------
-
-                    // add the x Axis
-                    svg.append("g")
-                        .attr("transform", "translate(0," + height + ")")
-                        .call(d3.axisBottom(x_scale));
-
-                    // add the y Axis
-                    svg.append("g")
-                        .call(d3.axisLeft(y_scale));
+            let y_scale = d3.scaleLinear()
+                .range([height, 0]); //Range is in pixel space, reversed because high down in svg
 
 
-                    console.log("End of Program");
-                }
+            // Scale the range of the data in the domains
+            x_scale.domain(this.sales.map(function(d) { return d.product; }));
+            y_scale.domain([0, d3.max(this.sales, function(d) { return d.count; })]);
 
-                this.plot()
+            // ----------------------------------------
+            // Sizing and Placing the Chart
+            // ----------------------------------------
+
+            // TODO Probs need to Not append an object here, but update it
+
+            // add the x Axis
+            svg.select(".x") // TODO Why is this the select statement for the class y axis?
+                .call(d3.axisBottom(x_scale));
+
+            // add the y Axis
+            svg.select(".y")
+                .call(d3.axisLeft(y_scale));
+
+
+            // ----------------------------------------
+            // Binding the Data
+            // ----------------------------------------
+
+            let bars = svg.selectAll(".bar")
+                .data(this.sales,function(d) { return d.product; });
+
+            //Update Old Bars, Even if nothing has changed, I may have to do this again for the axis
+            bars.attr("class", "update")
+                .attr("class", "bar") // This is what the style sheet grabs
+                .attr("x", function(d) {return x_scale(d.product);})
+                .attr("width", x_scale.bandwidth() )
+                .attr("y", function(d) {return y_scale(d.count);})
+                .attr("height", function(d) { return  height - y_scale(d.count); });
+
+            //remove unneeded bars
+            bars.exit().remove();
+
+            //Add new Bars
+            bars.enter().append("rect") //TODO What is rect doing here?
+                .attr("class", "bar") // This is what the style sheet grabs
+                .attr("x", function(d) {return x_scale(d.product);})
+                .attr("width", x_scale.bandwidth() )
+                .attr("y", function(d) {return y_scale(d.count);})
+                .attr("height", function(d) { return  height - y_scale(d.count); });
+
+            console.log("End of Update");
+        };
+
+        // ----------------------------------------
+        //  Logic
+        // ----------------------------------------
+        this.sales = [
+            { product: 'Hoodie',  count: 7 },
+            { product: 'Jacket',  count: 6 },
+            { product: 'Snuggie', count: 9 },
+        ];
+
+
+
+        this.svg = this.init_plot();
+        this.update_plot(this.svg);
 
 
 
@@ -88,7 +122,7 @@
         this.input = {};
         this.addInput = function(plotter){
             plotter.sales.push(this.input);
-            plotter.plot()
+            plotter.update_plot(plotter.svg);
             this.input = {};
         }
 
