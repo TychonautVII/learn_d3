@@ -13,7 +13,7 @@ npm is a package manager for the JavaScript programming language
 
  */
 
- "use strict";  // Code that enforces modern javascript
+"use strict";  // Code that enforces modern javascript
 
 let margin = {top: 40, right: 20, bottom: 30, left: 40};
 

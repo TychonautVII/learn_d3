@@ -1,6 +1,7 @@
 (function(){
     var app = angular.module('store',[ ]);
 
+    console.log("This Runs");
 
 
     app.controller('StoreController',function(){

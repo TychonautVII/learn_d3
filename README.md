@@ -51,4 +51,3 @@ brew install node
 brew install npm
 npm install d3 --save
 npm install @types/d3 --save-dev
-npm install jsdom
