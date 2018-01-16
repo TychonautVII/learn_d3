@@ -1,17 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html ng-app = "input_bar">
  <head>
      <meta http-equiv="Content-Type" content="text/html;charset=utf-8"> <!-- Specifies the Encoding of the Page -->
      <title>Changing D3 Data</title>
-     <!--<script type="text/javascript" src="/Users/peter/OneDrive/Peter/projects/d3/d3.js"></script> &lt;!&ndash; Loaded the D3 library&ndash;&gt;-->
+     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
      <script src="https://d3js.org/d3.v4.min.js"></script>
      <link href="style.css" rel="stylesheet">  <!-- Refers to the style sheet file located in thi-->
  </head>
  <body>
-     <!-- <script src="script.js"> </script> Actually runs the javascript code -->
+     <script src="app.js"> </script>
+     <div ng-controller= "Plotter as Plotter">
 
 
-     <script src="app.js"> </script> <!-- Actually runs the javascript code &ndash;&gt; -->
-     <!-- In more complicated examples with more complicated widgets, the html body gets more complex-->
+         <!-- Accepting User Input -->
+         <form name="updateSales" ng-controller="Inputer as Inputer"
+               ng-submit="Inputer.addInput(Plotter)">
+
+             <textarea ng-model="Inputer.input.product"></textarea>
+             <input type="number" ng-model="Inputer.input.count">
+
+             <input type="submit" value="Submit" />
+         </form>
+
+     </div>
  </body>
 </html>
