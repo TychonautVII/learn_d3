@@ -24,8 +24,15 @@ http://campus.codeschool.com/courses/shaping-up-with-angularjs/level/3/section/1
 
 ## Deeper on D3 
 https://github.com/d3/d3/wiki/Tutorials
-http://rajapradhan.com/blogs/d3-js-v4-essentials/
+https://github.com/d3/d3/blob/master/CHANGES.md#selections-d3-selection
+
+http://bl.ocks.org/alansmithy/e984477a741bc56db5a5
+
+https://bl.ocks.org/mbostock/3808218
+
 https://medium.com/netscape/visualizing-data-with-angular-and-d3-209dde784aeb
+http://rajapradhan.com/blogs/d3-js-v4-essentials/
+
 
 # TODO 
 I'll ultimately host something on a my github page. https://pages.github.com/ 
