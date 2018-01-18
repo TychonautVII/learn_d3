@@ -2,10 +2,36 @@
 (function(){
     let app = angular.module('input_bar',[ ]);
 
-    console.log("This Runs");
+    function get_ml_results() {
+        // this function gets a long csv string defined in ml_summary.js, parses and cleans it
+        // Done this way to avoid async csv read
+        console.log('reading csv file');
+        let ml_data_dirty = d3.csvParse(raw_ml_summary);
+        let ml_data_clean = ml_data_dirty.map(function (d) {
+                return {
+                    mean_test_score: +d.mean_test_score,
+                    std_test_score: +d.std_test_score,
+                    mean_train_score: +d.mean_train_score,
+                    std_train_score: +d.std_train_score,
+                    algorithum: d.algorithum,
+                    sigma_low_test_score: +d.sigma_low_test_score,
+                    sigma_low_train_score: +d.sigma_low_train_score,
+                    rank: +d.rank,
+                    svc_kernal: d.svc_kernal,
+                    gm_covariance_type: d.gm_covariance_type,
+                    poly_degree: +d.poly_degree,
+                    svc_C: +d.svc_C,
+                    svc_gamma: +d.svc_gamma,
+                    pca_n: +d.pca_n,
+                }
+            }
+        );
+        return ml_data_clean
+    }
+
+    let ml_results_sum = get_ml_results();
 
     let margin = {top: 40, right: 20, bottom: 30, left: 40};
-
     let width = 700 - margin.left - margin.right;
     let height = 300 - margin.top - margin.bottom;
 
@@ -52,8 +78,8 @@
 
 
             // Scale the range of the data in the domains
-            x_scale.domain(this.sales.map(function(d) { return d.product; }));
-            y_scale.domain([0, d3.max(this.sales, function(d) { return d.count; })]);
+            x_scale.domain(this.ml_data.map(function(d) { return d.product; }));
+            y_scale.domain([0, d3.max(this.ml_data, function(d) { return d.count; })]);
 
             // ----------------------------------------
             // Sizing and Placing the Chart
@@ -79,7 +105,7 @@
 
             // Rejoin the Data
             let bars = svg.selectAll(".bar")
-                .data(this.sales,function(d) { return d.product; });
+                .data(this.ml_data,function(d) { return d.product; });
 
             //remove unneeded bars
             bars.exit().remove(); // joe got removed
@@ -110,7 +136,7 @@
         // ----------------------------------------
         //  Logic
         // ----------------------------------------
-        this.sales = [
+        this.ml_data = [
             { product: 'Hoodie',  count: 7 },
             { product: 'Jacket',  count: 6 },
             { product: 'Snuggie', count: 9 },
@@ -130,13 +156,13 @@
         this.input = {};
         this.addInput = function(plotter){
 
-            let products = plotter.sales.map(function(d) { return d.product; });
+            let products = plotter.ml_data.map(function(d) { return d.product; });
 
             if (products.includes(this.input.product)) {
                 let prod_index = products.indexOf(this.input.product);
-                plotter.sales[prod_index] = this.input;
+                plotter.ml_data[prod_index] = this.input;
             } else {
-                plotter.sales.push(this.input);
+                plotter.ml_data.push(this.input);
             }
 
 
@@ -145,6 +171,9 @@
         }
 
     });
+
+
+    console.log("hello");
 
 
 })();
