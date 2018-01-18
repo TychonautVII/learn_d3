@@ -1,4 +1,4 @@
-var raw_ml_summary = `id,mean_test_score,std_test_score,mean_train_score,std_train_score,algorithum,sigma_low_test_score,sigma_low_train_score,rank,svc_kernal,gm_covariance_type,poly_degree,svc_C,svc_gamma,pca_n
+let raw_ml_summary = `id,mean_test_score,std_test_score,mean_train_score,std_train_score,algorithum,sigma_low_test_score,sigma_low_train_score,rank,svc_kernal,gm_covariance_type,poly_degree,svc_C,svc_gamma,pca_n
 488,0.8631578947368421,0.038115019267369175,0.8743529411764706,0.013401440814962952,SVC,0.825042875469473,0.8609515003615076,0,rbf,,,1.0,0.001,0.0
 495,0.8631578947368421,0.038115019267369175,0.8743529411764706,0.013401440814962952,SVC,0.825042875469473,0.8609515003615076,1,rbf,,,1.0,0.001,24.0
 494,0.8631578947368421,0.038115019267369175,0.8743529411764706,0.013401440814962952,SVC,0.825042875469473,0.8609515003615076,2,rbf,,,1.0,0.001,20.0

@@ -35,13 +35,18 @@
     let width = 700 - margin.left - margin.right;
     let height = 300 - margin.top - margin.bottom;
 
+    console.log('init complete');
+
     app.controller('Plotter',function(){
+
+        console.log('in plotter');
+
         // ----------------------------------------
         //  Function Defs
         // ----------------------------------------
 
         this.init_plot = function() {
-
+            console.log('in init plot');
             // ----------------------------------------
             // Sizing and Placing the Chart
             // ----------------------------------------
@@ -61,25 +66,35 @@
                 .attr("class", "y axis");
 
 
+
+
             return svg};
 
         this.update_plot = function(svg) {
-
+            console.log('start update plot');
             // ----------------------------------------
             // Setting Up the Scales
             // ----------------------------------------
 
-            let x_scale = d3.scaleBand()
-                .range([0, width])
-                .padding(0.1);
+            let x_scale = d3.scaleLinear()
+                .range([0, width]);
 
             let y_scale = d3.scaleLinear()
                 .range([height, 0]); //Range is in pixel space, reversed because high down in svg
 
 
-            // Scale the range of the data in the domains
-            x_scale.domain(this.ml_data.map(function(d) { return d.product; }));
-            y_scale.domain([0, d3.max(this.ml_data, function(d) { return d.count; })]);
+            // this goes undefined inside the anon funcs, so we have to define locals
+            let x_name = this['x_data_name'];
+            let y_name = this['y_data_name'];
+
+
+            let x_data = this['ml_data'].map(function(d) {return d[x_name]; });
+            let y_data = this['ml_data'].map(function(d) {return d[y_name]; });
+
+
+            // Scale the domain data in data space
+            x_scale.domain([d3.min(x_data), d3.max(x_data)]);
+            y_scale.domain([d3.min(y_data), d3.max(y_data)]);
 
             // ----------------------------------------
             // Sizing and Placing the Chart
@@ -104,45 +119,39 @@
 
 
             // Rejoin the Data
-            let bars = svg.selectAll(".bar")
-                .data(this.ml_data,function(d) { return d.product; });
+            let circles = svg.selectAll("dot")
+                .data(this.ml_data,function(d) { return d.id; });
 
             //remove unneeded bars
-            bars.exit().remove(); // joe got removed
+            circles.exit().remove();
 
             //Update Old Bars, Even if nothing has changed, I may have to do this again for the axis
-            bars.attr("class", "update")
-                .attr("class", "bar") // This is what the style sheet grabs
-                .attr("x", function(d) {return x_scale(d.product);})
-                .attr("width", x_scale.bandwidth() )
-                .transition(t)
-                .attr("y", function(d) {return y_scale(d.count);})
-                .attr("height", function(d) { return  height - y_scale(d.count); });
+            circles.attr("class", "update")
+                .attr("class", "dot") // This is what the style sheet grabs
+                .attr("r", 5)
+                .attr("cx", function(d) { return x_scale(d[x_name]); })
+                .attr("cy", function(d) { return y_scale(d[y_name]); });
 
             //Add new Bars
-            bars.enter().append("rect") //TODO What is rect doing here?
-                .attr("class", "bar") // This is what the style sheet grabs
-                .attr("x", function(d) {return x_scale(d.product);})
-                .attr("width", x_scale.bandwidth() )
-                .attr("y", function(d) {return y_scale(d.count);})
-                .attr("height", function(d) { return  height - y_scale(d.count); });
+            circles.enter().append("circle") //TODO What is rect doing here?
+                .attr("class", "dot") // This is what the style sheet grabs
+                .attr("r", 5)
+                .attr("cx", function(d) { return x_scale(d[x_name]); })
+                .attr("cy", function(d) { return y_scale(d[y_name]); });
 
 
 
 
-            console.log("End of Update");
+            console.log('end update plot');
         };
 
         // ----------------------------------------
         //  Logic
         // ----------------------------------------
-        this.ml_data = [
-            { product: 'Hoodie',  count: 7 },
-            { product: 'Jacket',  count: 6 },
-            { product: 'Snuggie', count: 9 },
-        ];
+        this.x_data_name = 'mean_train_score';
+        this.y_data_name = 'mean_test_score';
 
-
+        this.ml_data = ml_results_sum;
 
         this.svg = this.init_plot();
         this.update_plot(this.svg);
@@ -156,14 +165,14 @@
         this.input = {};
         this.addInput = function(plotter){
 
-            let products = plotter.ml_data.map(function(d) { return d.product; });
-
-            if (products.includes(this.input.product)) {
-                let prod_index = products.indexOf(this.input.product);
-                plotter.ml_data[prod_index] = this.input;
-            } else {
-                plotter.ml_data.push(this.input);
-            }
+            // let products = plotter.ml_data.map(function(d) { return d.product; });
+            //
+            // if (products.includes(this.input.product)) {
+            //     let prod_index = products.indexOf(this.input.product);
+            //     plotter.ml_data[prod_index] = this.input;
+            // } else {
+            //     plotter.ml_data.push(this.input);
+            // }
 
 
             plotter.update_plot(plotter.svg); // Update the Plot
@@ -172,8 +181,6 @@
 
     });
 
-
-    console.log("hello");
 
 
 })();
