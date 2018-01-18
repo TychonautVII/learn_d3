@@ -34,8 +34,9 @@ https://medium.com/netscape/visualizing-data-with-angular-and-d3-209dde784aeb
 http://rajapradhan.com/blogs/d3-js-v4-essentials/
 
 
-# TODO 
-I'll ultimately host something on a my github page. https://pages.github.com/ 
+# Demo 
+This a demo d3 visualization can be viewed at:
+https://tychonautvii.github.io/learn_d3/
 
 # Development Configuration Info
 
