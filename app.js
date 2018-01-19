@@ -128,7 +128,10 @@
                 .data(this.ml_data,function(d) { return d.id; });
 
             //remove unneeded bars
-            circles.exit().remove();
+            circles.exit()
+                .transition(t)
+                .attr("r", 0.0)
+                .remove();
 
             //Update Old Bars, Even if nothing has changed, I may have to do this again for the axis
             circles.attr("class", "update")
@@ -136,16 +139,19 @@
                 .attr("r", circle_size)
                 .transition(t)
                 .attr("cx", function(d) { return x_scale(d[x_name]); })
-                .attr("cy", function(d) { return y_scale(d[y_name]); });
+                .attr("cy", function(d) { return y_scale(d[y_name]); })
+                .attr("data_id",function(d) { return d.id; });
 
             //Add new Bars
-            circles.enter().append("circle") //TODO What is rect doing here?
+            circles.enter()
+                .append("circle") //TODO What is rect doing here?
                 .attr("class", "dot") // This is what the style sheet grabs
-                .attr("r", circle_size)
                 .attr("cx", function(d) { return x_scale(d[x_name]); })
-                .attr("cy", function(d) { return y_scale(d[y_name]); });
-
-
+                .attr("cy", function(d) { return y_scale(d[y_name]); })
+                .attr("data_id",function(d) { return d.id; })
+                .attr("r", 0.0)
+                .transition(t)
+                .attr("r", circle_size)
 
 
             console.log('end update plot');
@@ -168,6 +174,8 @@
 
     app.controller('Inputer',function(){
         // This is the code that will be executed when the controller is called
+
+        // TODO Might need to explictly remove undefineds and such
         this.x_data_name = '';
         this.y_data_name = '';
 
