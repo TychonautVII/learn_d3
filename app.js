@@ -34,11 +34,18 @@
 
     let ml_results_sum = get_ml_results();
 
-    let margin = {top: 40, right: 20, bottom: 30, left: 40};
+    // Plot Appearance Settings
+    let margin = {top: 40, right: 20, bottom: 50, left: 60};
     let width = 700 - margin.left - margin.right;
     let height = 300 - margin.top - margin.bottom;
     let circle_size = 7;
     let transition_time_ms = 1000;
+
+    // Initial Axis Settings
+    let x_data_name = 'mean_train_score';
+    let y_data_name = 'mean_test_score';
+    let c_data_name = 'algorithum';
+
 
     console.log('init complete');
 
@@ -52,9 +59,6 @@
 
         this.init_plot = function() {
             console.log('in init plot');
-            // ----------------------------------------
-            // Sizing and Placing the Chart
-            // ----------------------------------------
 
             let svg = d3.select(".chart")
                 .append("svg")
@@ -64,21 +68,48 @@
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
             svg.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")");
+                .attr("transform", "translate(0," + height + ")")
+                .attr("class", "x axis");
+
 
             svg.append("g")
                 .attr("class", "y axis");
 
+            //x axis text
+            svg.append("text")
+                .attr("class","x_label")
+                .attr("transform",
+                    "translate(" + (width/2) + " ," +
+                    (height + margin.top) + ")")
+                .attr("text-anchor", "middle");
 
+            //y axis text
+            svg.append("text")
+                .attr("class","y_label")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left)
+                .attr("x",0 - (height / 2))
+                .attr("dy", "1em")
+                .attr("text-anchor", "middle");
+
+            //Title text
+            svg.append("text")
+                .attr("class","plot_title")
+                .attr("transform",
+                      "translate(" + (width/2) + " ," +
+                                        (0) + ")")
+                .attr("text-anchor", "middle")
+                .text("Heart Disease Classification Grid Search Results")
+                .style("font-size","20px");
 
 
             return svg};
 
         this.update_plot = function(svg) {
             console.log('start update plot');
+
             // ----------------------------------------
-            // Setting Up the Scales
+            // Updating the Axes
             // ----------------------------------------
 
             let x_scale = d3.scaleLinear()
@@ -87,7 +118,7 @@
             let y_scale = d3.scaleLinear()
                 .range([height, 0]); //Range is in pixel space, reversed because high down in svg
 
-            let c_scale = d3.scaleOrdinal(d3.schemeCategory10)
+            let c_scale = d3.scaleOrdinal(d3.schemeCategory10);
 
 
             // this goes undefined inside the anon funcs, so we have to define locals
@@ -95,9 +126,11 @@
             let y_name = this['y_data_name'];
             let c_name = this['c_data_name'];
 
+            d3.select(".x_label").text(x_name); // TODO Make this the pretty names
+            d3.select(".y_label").text(y_name);
+
             let x_data = this['ml_data'].map(function(d) {return d[x_name]; });
             let y_data = this['ml_data'].map(function(d) {return d[y_name]; });
-
 
 
             // Scale the domain data in data space
@@ -107,9 +140,6 @@
             x_scale.domain([0, 1]);
             y_scale.domain([0, 1]);
 
-            // ----------------------------------------
-            // Sizing and Placing the Chart
-            // ----------------------------------------
 
             // add the x Axis
             svg.select(".x") // TODO Why is this the select statement for the class y axis?
@@ -166,10 +196,13 @@
         // ----------------------------------------
         //  Logic
         // ----------------------------------------
-        // TODO set these defaults up top
-        this.x_data_name = 'mean_train_score';
-        this.y_data_name = 'mean_test_score';
-        this.c_data_name = 'algorithum';
+
+        d3.select('.input').attr("position", "0, 700");
+
+        // Inits the axis stuff in the plot
+        this.x_data_name = x_data_name;
+        this.y_data_name = y_data_name;
+        this.c_data_name = c_data_name;
 
         this.ml_data = ml_results_sum;
 
@@ -181,13 +214,16 @@
     });
 
     app.controller('Inputer',function(){
+
+
         // This is the code that will be executed when the controller is called
 
         // TODO Might need to explictly remove undefineds and such
-        this.x_data_name = 'mean_train_score';
-        this.y_data_name = 'mean_test_score';
-        this.c_data_name = 'algorithum';
 
+        // Inits the axis stuff in the form
+        this.x_data_name = x_data_name;
+        this.y_data_name = y_data_name;
+        this.c_data_name = c_data_name;
 
         this.addInput = function(plotter){
 
@@ -200,6 +236,10 @@
         }
 
     });
+
+    d3.select(".description")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
 
 
 
