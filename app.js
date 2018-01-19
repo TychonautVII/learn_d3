@@ -7,8 +7,11 @@
         // Done this way to avoid async csv read
         console.log('reading csv file');
         let ml_data_dirty = d3.csvParse(raw_ml_summary);
+        let id = 0;
         let ml_data_clean = ml_data_dirty.map(function (d) {
+                id = id+1;
                 return {
+                    id: id,
                     mean_test_score: +d.mean_test_score,
                     std_test_score: +d.std_test_score,
                     mean_train_score: +d.mean_train_score,
@@ -35,7 +38,7 @@
     let width = 700 - margin.left - margin.right;
     let height = 300 - margin.top - margin.bottom;
     let circle_size = 7;
-    let transition_time_ms = 500;
+    let transition_time_ms = 1000;
 
     console.log('init complete');
 
@@ -103,7 +106,7 @@
             // ----------------------------------------
             // Sizing and Placing the Chart
             // ----------------------------------------
-            
+
             // add the x Axis
             svg.select(".x") // TODO Why is this the select statement for the class y axis?
                 .call(d3.axisBottom(x_scale));
