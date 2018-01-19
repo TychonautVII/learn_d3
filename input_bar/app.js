@@ -73,7 +73,7 @@
             // ----------------------------------------
             // Binding the Data
             // ----------------------------------------
-            var t = d3.transition()
+            let t = d3.transition()
                 .duration(1000);
 
 

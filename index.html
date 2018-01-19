@@ -3,10 +3,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"> <!-- Specifies the Encoding of the Page -->
     <title>Changing D3 Data</title>
+    <!--<script src="min_ml_summary.js"></script>-->
     <script src="ml_summary.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <link href="style.css" rel="stylesheet">  <!-- Refers to the style sheet file located in thi-->
+    <link rel="stylesheet" href="style.css" >  <!-- Refers to the style sheet file located in thi-->
 </head>
 <body>
 <script src="app.js"> </script>
@@ -15,12 +16,28 @@
     <div class="chart"></div>
 
     <!-- Accepting User Input -->
-    <form name="updateSales"
+    <form name="user_input"
           ng-controller="Inputer as Inputer"
           ng-submit="Inputer.addInput(Plotter)">
 
-        <textarea ng-model="Inputer.input.product"></textarea>
-        <input type="number" ng-model="Inputer.input.count">
+        <select ng-model="Inputer.x_data_name">
+            <option value="mean_test_score">Test Score Mean</option>
+            <option value="std_test_score">Test Score Sigma</option>
+            <option value="mean_train_score">Train Score Mean</option>
+            <option value="std_train_score">Train Score Sigma</option>
+            <option value="sigma_low_test_score">Test Sigma-Low Score</option>
+            <option value="sigma_low_train_score">Train Sigma-Low Score</option>
+        </select>
+
+        <select ng-model="Inputer.y_data_name">
+            <option value="mean_test_score">Test Score Mean</option>
+            <option value="std_test_score">Test Score Sigma</option>
+            <option value="mean_train_score">Train Score Mean</option>
+            <option value="std_train_score">Train Score Sigma</option>
+            <option value="sigma_low_test_score">Test Sigma-Low Score</option>
+            <option value="sigma_low_train_score">Train Sigma-Low Score</option>
+        </select>
+
 
         <input type="submit" value="Submit" />
     </form>

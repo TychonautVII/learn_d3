@@ -1,8 +1,11 @@
 # Intro
-This is repository designed as a sandbox to play with javascript, primarily to get up and running with d3 and other visualization libs
+This is repository designed as a sandbox to play with javascript, 
+primarily to get up and running with d3 and other visualization libs
+
+A demo d3 visualization can be viewed at:
+https://tychonautvii.github.io/learn_d3/
 
 # Sources
-
  ## Introductory Material
 I started with an intro to some basic front end tech in a d3 context:
 http://www.jeromecukier.net/blog/2012/09/04/getting-to-hello-world-with-d3/
@@ -33,10 +36,6 @@ https://bl.ocks.org/mbostock/3808218
 https://medium.com/netscape/visualizing-data-with-angular-and-d3-209dde784aeb
 http://rajapradhan.com/blogs/d3-js-v4-essentials/
 
-
-# Demo 
-This a demo d3 visualization can be viewed at:
-https://tychonautvii.github.io/learn_d3/
 
 # Development Configuration Info
 

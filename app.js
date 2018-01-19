@@ -34,6 +34,8 @@
     let margin = {top: 40, right: 20, bottom: 30, left: 40};
     let width = 700 - margin.left - margin.right;
     let height = 300 - margin.top - margin.bottom;
+    let circle_size = 7;
+    let transition_time_ms = 500;
 
     console.log('init complete');
 
@@ -87,21 +89,21 @@
             let x_name = this['x_data_name'];
             let y_name = this['y_data_name'];
 
-
             let x_data = this['ml_data'].map(function(d) {return d[x_name]; });
             let y_data = this['ml_data'].map(function(d) {return d[y_name]; });
 
 
             // Scale the domain data in data space
-            x_scale.domain([d3.min(x_data), d3.max(x_data)]);
-            y_scale.domain([d3.min(y_data), d3.max(y_data)]);
+            // x_scale.domain([d3.min(x_data), d3.max(x_data)]);
+            // y_scale.domain([d3.min(y_data), d3.max(y_data)]);
+
+            x_scale.domain([0, 1]);
+            y_scale.domain([0, 1]);
 
             // ----------------------------------------
             // Sizing and Placing the Chart
             // ----------------------------------------
-
-            // TODO Probs need to Not append an object here, but update it
-
+            
             // add the x Axis
             svg.select(".x") // TODO Why is this the select statement for the class y axis?
                 .call(d3.axisBottom(x_scale));
@@ -114,12 +116,12 @@
             // ----------------------------------------
             // Binding the Data
             // ----------------------------------------
-            var t = d3.transition()
-                .duration(1000);
+            let t = d3.transition()
+                .duration(transition_time_ms);
 
 
             // Rejoin the Data
-            let circles = svg.selectAll("dot")
+            let circles = svg.selectAll(".dot")
                 .data(this.ml_data,function(d) { return d.id; });
 
             //remove unneeded bars
@@ -128,14 +130,15 @@
             //Update Old Bars, Even if nothing has changed, I may have to do this again for the axis
             circles.attr("class", "update")
                 .attr("class", "dot") // This is what the style sheet grabs
-                .attr("r", 5)
+                .attr("r", circle_size)
+                .transition(t)
                 .attr("cx", function(d) { return x_scale(d[x_name]); })
                 .attr("cy", function(d) { return y_scale(d[y_name]); });
 
             //Add new Bars
             circles.enter().append("circle") //TODO What is rect doing here?
                 .attr("class", "dot") // This is what the style sheet grabs
-                .attr("r", 5)
+                .attr("r", circle_size)
                 .attr("cx", function(d) { return x_scale(d[x_name]); })
                 .attr("cy", function(d) { return y_scale(d[y_name]); });
 
@@ -162,21 +165,17 @@
 
     app.controller('Inputer',function(){
         // This is the code that will be executed when the controller is called
-        this.input = {};
+        this.x_data_name = '';
+        this.y_data_name = '';
+
+
         this.addInput = function(plotter){
 
-            // let products = plotter.ml_data.map(function(d) { return d.product; });
-            //
-            // if (products.includes(this.input.product)) {
-            //     let prod_index = products.indexOf(this.input.product);
-            //     plotter.ml_data[prod_index] = this.input;
-            // } else {
-            //     plotter.ml_data.push(this.input);
-            // }
+            plotter.x_data_name = this.x_data_name;
+            plotter.y_data_name = this.y_data_name;
 
 
             plotter.update_plot(plotter.svg); // Update the Plot
-            this.input = {}; //Clear the input
         }
 
     });
