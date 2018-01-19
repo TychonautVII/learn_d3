@@ -21,7 +21,8 @@
           ng-submit="Inputer.addInput(Plotter)">
 
         <!--TODO move all this logic into the javacript using repeats and expressions and such-->
-        <select ng-model="Inputer.x_data_name">
+        <label for="x_ax_in">X Axis</label>
+        <select ng-model="Inputer.x_data_name" id="x_ax_in" selected="mean_train_score">
             <option value="mean_test_score">Test Score Mean</option>
             <option value="std_test_score">Test Score Sigma</option>
             <option value="mean_train_score">Train Score Mean</option>
@@ -30,13 +31,22 @@
             <option value="sigma_low_train_score">Train Sigma-Low Score</option>
         </select>
 
-        <select ng-model="Inputer.y_data_name">
+        <label for="y_ax_in">Y Axis</label>
+        <select ng-model="Inputer.y_data_name" id="y_ax_in" selected="mean_test_score">
             <option value="mean_test_score">Test Score Mean</option>
             <option value="std_test_score">Test Score Sigma</option>
             <option value="mean_train_score">Train Score Mean</option>
             <option value="std_train_score">Train Score Sigma</option>
             <option value="sigma_low_test_score">Test Sigma-Low Score</option>
             <option value="sigma_low_train_score">Train Sigma-Low Score</option>
+        </select>
+
+        <label for="c_ax_in">Color By</label>
+        <select ng-model="Inputer.c_data_name" id="c_ax_in" selected="algorithum">
+            <option value="algorithum">Algorithum</option>
+            <option value="svc_kernal">SVC Kernal</option>
+            <option value="gm_covariance_type">GM Covariance Type</option>
+            <option value="pca_n">PCA N Features</option>
         </select>
 
 

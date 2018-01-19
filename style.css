@@ -1,5 +1,5 @@
 text {font-size:14px;}
 .bar { fill: #693894; }
-.dot { fill: #693894;
-       opacity: .8;}
-
+.dot { opacity: .8;}
+/*.dot { fill: #693894;*/
+       /*opacity: .8;}*/

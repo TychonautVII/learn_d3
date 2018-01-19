@@ -87,13 +87,17 @@
             let y_scale = d3.scaleLinear()
                 .range([height, 0]); //Range is in pixel space, reversed because high down in svg
 
+            let c_scale = d3.scaleOrdinal(d3.schemeCategory10)
+
 
             // this goes undefined inside the anon funcs, so we have to define locals
             let x_name = this['x_data_name'];
             let y_name = this['y_data_name'];
+            let c_name = this['c_data_name'];
 
             let x_data = this['ml_data'].map(function(d) {return d[x_name]; });
             let y_data = this['ml_data'].map(function(d) {return d[y_name]; });
+
 
 
             // Scale the domain data in data space
@@ -140,6 +144,7 @@
                 .transition(t)
                 .attr("cx", function(d) { return x_scale(d[x_name]); })
                 .attr("cy", function(d) { return y_scale(d[y_name]); })
+                .attr('fill', function(d) { return c_scale(d[c_name]); } )
                 .attr("data_id",function(d) { return d.id; });
 
             //Add new Bars
@@ -148,10 +153,11 @@
                 .attr("class", "dot") // This is what the style sheet grabs
                 .attr("cx", function(d) { return x_scale(d[x_name]); })
                 .attr("cy", function(d) { return y_scale(d[y_name]); })
+                .attr('fill', function(d) { return c_scale(d[c_name]); } )
                 .attr("data_id",function(d) { return d.id; })
                 .attr("r", 0.0)
                 .transition(t)
-                .attr("r", circle_size)
+                .attr("r", circle_size);
 
 
             console.log('end update plot');
@@ -160,8 +166,10 @@
         // ----------------------------------------
         //  Logic
         // ----------------------------------------
+        // TODO set these defaults up top
         this.x_data_name = 'mean_train_score';
         this.y_data_name = 'mean_test_score';
+        this.c_data_name = 'algorithum';
 
         this.ml_data = ml_results_sum;
 
@@ -176,14 +184,16 @@
         // This is the code that will be executed when the controller is called
 
         // TODO Might need to explictly remove undefineds and such
-        this.x_data_name = '';
-        this.y_data_name = '';
+        this.x_data_name = 'mean_train_score';
+        this.y_data_name = 'mean_test_score';
+        this.c_data_name = 'algorithum';
 
 
         this.addInput = function(plotter){
 
             plotter.x_data_name = this.x_data_name;
             plotter.y_data_name = this.y_data_name;
+            plotter.c_data_name = this.c_data_name;
 
 
             plotter.update_plot(plotter.svg); // Update the Plot
