@@ -1,5 +1,16 @@
+body { font: 12px Arial;}
 text {font-size:14px;}
 .bar { fill: #693894; }
 .dot { opacity: .8;}
-/*.dot { fill: #693894;*/
-       /*opacity: .8;}*/
+.tooltip {
+    position: absolute;
+    text-align: left;
+    width: 175px;
+    height: 280px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 0px;
+    pointer-events: none;
+}

@@ -8,25 +8,32 @@
         console.log('reading csv file');
         let ml_data_dirty = d3.csvParse(raw_ml_summary);
         let id = 0;
+        let pca_tmp =0;
+        let digits_2_print = 3;
         let ml_data_clean = ml_data_dirty.map(function (d) {
                 id = id+1;
+                pca_tmp = +d.pca_n;
+                if (pca_tmp===0){
+                    pca_tmp = 25;
+                }
                 return {
                     id: id,
-                    mean_test_score: +d.mean_test_score,
-                    std_test_score: +d.std_test_score,
-                    mean_train_score: +d.mean_train_score,
-                    std_train_score: +d.std_train_score,
+                    mean_test_score: (+d.mean_test_score).toFixed(digits_2_print),
+                    std_test_score: (+d.std_test_score).toFixed(digits_2_print),
+                    mean_train_score: (+d.mean_train_score).toFixed(digits_2_print),
+                    std_train_score: (+d.std_train_score).toFixed(digits_2_print),
                     algorithum: d.algorithum,
-                    sigma_low_test_score: +d.sigma_low_test_score,
-                    sigma_low_train_score: +d.sigma_low_train_score,
+                    sigma_low_test_score: (+d.sigma_low_test_score).toFixed(digits_2_print),
+                    sigma_low_train_score: (+d.sigma_low_train_score).toFixed(digits_2_print),
                     rank: +d.rank,
                     svc_kernal: d.svc_kernal,
                     gm_covariance_type: d.gm_covariance_type,
                     poly_degree: +d.poly_degree,
                     svc_C: +d.svc_C,
                     svc_gamma: +d.svc_gamma,
-                    pca_n: +d.pca_n,
+                    pca_n: pca_tmp,
                 }
+            //    TODO Clean  PCA set 0 to 25
             }
         );
         return ml_data_clean
@@ -42,9 +49,9 @@
     let transition_time_ms = 1000;
 
     // Initial Axis Settings
-    let x_data_name = 'mean_train_score';
-    let y_data_name = 'mean_test_score';
-    let c_data_name = 'algorithum';
+    let x_data_name_init = 'mean_train_score';
+    let y_data_name_init = 'mean_test_score';
+    let c_data_name_init = 'algorithum';
 
 
     console.log('init complete');
@@ -56,10 +63,39 @@
         // ----------------------------------------
         //  Function Defs
         // ----------------------------------------
+        function obj_2_html_table(d){
+            let out = '<table>';
+
+            for(let key in d) {
+                console.log( key );
+                console.log( d[key] );
+                out += `<tr><td>${key}</td><td>${d[key]}</td></tr>`;
+            }
+
+            out += '<table>';
+
+        return out}
+
+
+        function show_tip(d){
+            console.log(d);
+            d3.select(".tooltip")
+                .style("opacity", .9)
+                .html(obj_2_html_table(d))
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+
+        }
+
+        function hide_tip(d){
+            d3.select(".tooltip")
+                .style("opacity", 0);
+        }
 
         this.init_plot = function() {
             console.log('in init plot');
 
+            // Chart Size and Location
             let svg = d3.select(".chart")
                 .append("svg")
                 .attr("width", width + margin.left + margin.right)
@@ -102,16 +138,19 @@
                 .text("Heart Disease Classification Grid Search Results")
                 .style("font-size","20px");
 
+            //Tooltip
+            d3.select(".misc")
+                .append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
 
             return svg};
 
         this.update_plot = function(svg) {
             console.log('start update plot');
-
             // ----------------------------------------
             // Updating the Axes
             // ----------------------------------------
-
             let x_scale = d3.scaleLinear()
                 .range([0, width]);
 
@@ -175,7 +214,10 @@
                 .attr("cx", function(d) { return x_scale(d[x_name]); })
                 .attr("cy", function(d) { return y_scale(d[y_name]); })
                 .attr('fill', function(d) { return c_scale(d[c_name]); } )
-                .attr("data_id",function(d) { return d.id; });
+                .attr("data_id",function(d) { return d.id; })
+                .on("mouseover", show_tip)
+                .on("mouseout", hide_tip)
+
 
             //Add new Bars
             circles.enter()
@@ -185,9 +227,11 @@
                 .attr("cy", function(d) { return y_scale(d[y_name]); })
                 .attr('fill', function(d) { return c_scale(d[c_name]); } )
                 .attr("data_id",function(d) { return d.id; })
+                .on("mouseover", show_tip)
+                .on("mouseout", hide_tip)
                 .attr("r", 0.0)
                 .transition(t)
-                .attr("r", circle_size);
+                .attr("r", circle_size)
 
 
             console.log('end update plot');
@@ -197,12 +241,10 @@
         //  Logic
         // ----------------------------------------
 
-        d3.select('.input').attr("position", "0, 700");
-
         // Inits the axis stuff in the plot
-        this.x_data_name = x_data_name;
-        this.y_data_name = y_data_name;
-        this.c_data_name = c_data_name;
+        this.x_data_name = x_data_name_init;
+        this.y_data_name = y_data_name_init;
+        this.c_data_name = c_data_name_init;
 
         this.ml_data = ml_results_sum;
 
@@ -221,9 +263,9 @@
         // TODO Might need to explictly remove undefineds and such
 
         // Inits the axis stuff in the form
-        this.x_data_name = x_data_name;
-        this.y_data_name = y_data_name;
-        this.c_data_name = c_data_name;
+        this.x_data_name = x_data_name_init;
+        this.y_data_name = y_data_name_init;
+        this.c_data_name = c_data_name_init;
 
         this.addInput = function(plotter){
 

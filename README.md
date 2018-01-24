@@ -29,13 +29,26 @@ http://campus.codeschool.com/courses/shaping-up-with-angularjs/level/3/section/1
 https://github.com/d3/d3/wiki/Tutorials
 https://github.com/d3/d3/blob/master/CHANGES.md#selections-d3-selection
 
+
+
 http://bl.ocks.org/alansmithy/e984477a741bc56db5a5
 
 https://bl.ocks.org/mbostock/3808218
 
+Good source on tooltips
+http://bl.ocks.org/d3noob/a22c42db65eb00d4e369
+
 https://medium.com/netscape/visualizing-data-with-angular-and-d3-209dde784aeb
 http://rajapradhan.com/blogs/d3-js-v4-essentials/
 
+
+# Features To Add:
+* ~~Add a Tooltip~~
+* Filter Missing Data
+* Add Algorithum Checkboxes
+* Add a Widget to turn on/off tooltip
+* Add a Zoom Widget
+* Legend (for now use tooltip)
 
 # Development Configuration Info
 
@@ -44,10 +57,12 @@ I use ECMAScript 6 to have scope, and avoid declaration hoisting
 Install home-brew 
 https://github.com/Homebrew/install
 
+NPM install globally or in a local project directory
 ```bash
 brew install node
 brew install npm
-npm install d3 --save
-npm install @types/d3 --save-dev
+npm install -g d3 --save
+npm install -g @types/d3 --save-dev
+npm install -g angular
 ```
 
