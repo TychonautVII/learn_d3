@@ -47,6 +47,7 @@
     let height = 300 - margin.top - margin.bottom;
     let circle_size = 7;
     let transition_time_ms = 1000;
+    let circle_opacity = 0.8;
 
     // Initial Axis Settings
     let x_data_name_init = 'mean_train_score';
@@ -212,22 +213,40 @@
             let t = d3.transition()
                 .duration(transition_time_ms);
 
-            // Rejoin the Data
-            let circles = svg.selectAll(".dot")
-                .data( this.ml_data.filter(d => mask[d.id]) ,
-                      function(d) { return d.id; });
+            // Get the different update types
+            let update = svg.selectAll("circle")
+                            .data( this.ml_data.filter(d => mask[d.id]) ,
+                                    function(d) { return d.id; });
 
-            //remove unneeded bars
-            circles.exit()
-                .transition(t)
+            let enter = update
+                          .enter()
+                          .append("circle");
+
+            let exit = update.exit();
+
+            // Get the different update types
+            exit.transition(t)
+                .attr("opacity",0.0)
                 .attr("r", 0.0)
                 .remove();
 
-            //Update Old Bars, Even if nothing has changed, I may have to do this again for the axis
-            circles.attr("class", "update")
-                .attr("class", "dot") // This is what the style sheet grabs
+            enter.attr("cx", function(d) { return x_scale(d[x_name]); })
+                 .attr("cy", function(d) { return y_scale(d[y_name]); })
+                 .attr('fill', function(d) { return c_scale(d[c_name]); } )
+                 .attr("data_id",function(d) { return d.id; }).attr("r", 0.0)
+                 .on("mouseover", show_tip)
+                 .on("mouseout", hide_tip)
+                 .attr("r", 0)
+                 .attr("opacity",0.0)
+                 .transition(t)
+                 .attr("r", circle_size)
+                 .attr("opacity",circle_opacity);
+
+            //TODO lean usecase for merge
+
+            update.transition(t)
+                .attr("opacity",circle_opacity)
                 .attr("r", circle_size)
-                .transition(t)
                 .attr("cx", function(d) { return x_scale(d[x_name]); })
                 .attr("cy", function(d) { return y_scale(d[y_name]); })
                 .attr('fill', function(d) { return c_scale(d[c_name]); } )
@@ -235,20 +254,6 @@
                 .on("mouseover", show_tip)
                 .on("mouseout", hide_tip);
 
-
-            //Add new Bars
-            circles.enter()
-                .append("circle") //TODO What is rect doing here?
-                .attr("class", "dot") // This is what the style sheet grabs
-                .attr("cx", function(d) { return x_scale(d[x_name]); })
-                .attr("cy", function(d) { return y_scale(d[y_name]); })
-                .attr('fill', function(d) { return c_scale(d[c_name]); } )
-                .attr("data_id",function(d) { return d.id; })
-                .on("mouseover", show_tip)
-                .on("mouseout", hide_tip)
-                .attr("r", 0.0)
-                .transition(t)
-                .attr("r", circle_size);
 
 
             console.log('end update plot');

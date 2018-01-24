@@ -35,9 +35,13 @@ http://bl.ocks.org/alansmithy/e984477a741bc56db5a5
 
 https://bl.ocks.org/mbostock/3808218
 
+Very cool stuff interactive demo of d3 update pattern. Really helped me understand d3
+https://bl.ocks.org/cmgiven/32d4c53f19aea6e528faf10bfe4f3da9
+
 Good source on tooltips
 http://bl.ocks.org/d3noob/a22c42db65eb00d4e369
 
+Angular + D3:
 https://medium.com/netscape/visualizing-data-with-angular-and-d3-209dde784aeb
 http://rajapradhan.com/blogs/d3-js-v4-essentials/
 
