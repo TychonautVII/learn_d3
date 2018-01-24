@@ -6,12 +6,8 @@
 
     <!--<script src="min_ml_summary.js"></script>-->
     <script src="ml_summary.js"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
-    <!--<script src="/usr/local/lib/node_modules/angular/angular.min.js"></script>-->
-
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <!--<script src="/Users/peter/OneDrive/Peter/projects/d3/d3.min.js"></script>-->
 
     <link rel="stylesheet" href="style.css" >  <!-- Refers to the style sheet file located in thi-->
 </head>
@@ -20,7 +16,6 @@
 <div ng-controller= "Plotter as Plotter">
 
     <div class="chart"></div>
-
     <div class = "misc"></div>
 
     <!-- Accepting User Input -->
@@ -62,9 +57,14 @@
     </form>
 
     <!--TODO Add Description Text-->
-    <div class="description">
-        <p></p>
+    <div class="Description">
+        <h1>Description</h1>
+        <p>I used a simple, open, data set to apply machine learning to the problem of identifying heart disease from a series of physiological measurements. I assessed the performance of Perceptrons, Gaussian Mixtures, and Support Vector Classifiers. </p>
+        <p>In total 3081 Models were trained, 25 times each for cross validation. Statistics on performance of each of these 3081 models across the 25 cross validation runs are displayed above.</p>
+        <p>My python code for the machine learning is available <a href =https://github.com/TychonautVII/heart_disease_dm>Here</a></p>
+        <p>Data Available at the UCI machine learning repository <a href =https://archive.ics.uci.edu/ml/datasets/Heart+Disease >Here</a></p>
     </div>
+
 </div>
 </body>
 </html>

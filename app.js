@@ -56,7 +56,6 @@
     // Tooltp Settings
     let tt_opacity = 0.9;
     let tt_no_show = ['rank','id'];
-    let tt_font_size = 12;
 
 
 
@@ -154,6 +153,11 @@
                 .attr("class", "tooltip")
                 .style("opacity", 0);
 
+            //description
+            d3.select(".Description")
+                .style("width", width + margin.left + margin.right + 'px');
+
+
             return svg};
 
         this.update_plot = function(svg) {
@@ -180,7 +184,6 @@
 
             let x_data = this['ml_data'].map(function(d) {return d[x_name]; });
             let y_data = this['ml_data'].map(function(d) {return d[y_name]; });
-
 
             // Scale the domain data in data space
             // x_scale.domain([d3.min(x_data), d3.max(x_data)]);
@@ -259,7 +262,7 @@
         };
 
         // ----------------------------------------
-        //  Main
+        //  Init Plot Logic
         // ----------------------------------------
 
         // Inits the axis stuff in the plot
@@ -297,12 +300,6 @@
         }
 
     });
-
-    d3.select(".description")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-
-
 
 })();
 

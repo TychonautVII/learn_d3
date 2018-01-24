@@ -1,7 +1,6 @@
 body { font: 12px Arial;}
 text {font-size:14px;}
 .bar { fill: #693894; }
-.dot { opacity: .8;}
 .tooltip {
     position: absolute;
     text-align: left;
@@ -13,4 +12,7 @@ text {font-size:14px;}
     border: 0px;
     border-radius: 6px;
     pointer-events: none;
+}
+p {
+    font-size: 14px;
 }
