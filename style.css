@@ -5,10 +5,10 @@ text {font-size:14px;}
 .tooltip {
     position: absolute;
     text-align: left;
-    width: 175px;
-    height: 245px;
+    width: auto;
+    height: auto;
     padding: 2px;
-    font: 12px sans-serif;
+    font-size: 12px;
     background: lightsteelblue;
     border: 0px;
     border-radius: 6px;

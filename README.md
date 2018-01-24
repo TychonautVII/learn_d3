@@ -51,8 +51,8 @@ http://rajapradhan.com/blogs/d3-js-v4-essentials/
 * Filter Missing Data
 * Add Algorithum Checkboxes
 * Add a Widget to turn on/off tooltip
-* Add a Zoom Widget
-* Legend (for now use tooltip)
+* Add a Box Zoom
+* Add a Dynamic Legend
 
 # Development Configuration Info
 

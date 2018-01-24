@@ -33,7 +33,6 @@
                     svc_gamma: +d.svc_gamma,
                     pca_n: pca_tmp,
                 }
-            //    TODO Clean  PCA set 0 to 25
             }
         );
         return ml_data_clean
@@ -57,6 +56,7 @@
     // Tooltp Settings
     let tt_opacity = 0.9;
     let tt_no_show = ['rank','id'];
+    let tt_font_size = 12;
 
 
 
@@ -75,6 +75,9 @@
 
             for(let key in d) {
                 if (tt_no_show.includes(key)){
+                    continue
+                }
+                if (d[key]==''){
                     continue
                 }
                 out += `<tr><td>${key}</td><td>${d[key]}</td></tr>`;
@@ -198,14 +201,10 @@
             // ----------------------------------------
             // Updating the Mask
             // ----------------------------------------
-            console.log((this.ml_data).length);
 
             let mask = this.ml_data.map(function(d){
                 return d[c_name] !==''
             });
-            console.log(mask);
-            console.log(this.ml_data.filter(d => mask[d.id]));
-
 
             // ----------------------------------------
             // Binding the Data
@@ -281,8 +280,6 @@
 
 
         // This is the code that will be executed when the controller is called
-
-        // TODO Might need to explictly remove undefineds and such
 
         // Inits the axis stuff in the form
         this.x_data_name = x_data_name_init;
