@@ -6,11 +6,11 @@ text {font-size:14px;}
     position: absolute;
     text-align: left;
     width: 175px;
-    height: 280px;
+    height: 245px;
     padding: 2px;
     font: 12px sans-serif;
     background: lightsteelblue;
     border: 0px;
-    border-radius: 0px;
+    border-radius: 6px;
     pointer-events: none;
 }

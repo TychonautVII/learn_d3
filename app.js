@@ -7,7 +7,7 @@
         // Done this way to avoid async csv read
         console.log('reading csv file');
         let ml_data_dirty = d3.csvParse(raw_ml_summary);
-        let id = 0;
+        let id = -1;
         let pca_tmp =0;
         let digits_2_print = 3;
         let ml_data_clean = ml_data_dirty.map(function (d) {
@@ -53,6 +53,11 @@
     let y_data_name_init = 'mean_test_score';
     let c_data_name_init = 'algorithum';
 
+    // Tooltp Settings
+    let tt_opacity = 0.9;
+    let tt_no_show = ['rank','id'];
+
+
 
     console.log('init complete');
 
@@ -63,25 +68,26 @@
         // ----------------------------------------
         //  Function Defs
         // ----------------------------------------
-        function obj_2_html_table(d){
+
+        function row_2_html_table(d){
             let out = '<table>';
 
             for(let key in d) {
-                console.log( key );
-                console.log( d[key] );
+                if (tt_no_show.includes(key)){
+                    continue
+                }
                 out += `<tr><td>${key}</td><td>${d[key]}</td></tr>`;
             }
-
             out += '<table>';
-
-        return out}
+            return out
+        }
 
 
         function show_tip(d){
             console.log(d);
             d3.select(".tooltip")
-                .style("opacity", .9)
-                .html(obj_2_html_table(d))
+                .style("opacity", tt_opacity)
+                .html(row_2_html_table(d))
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
 
@@ -188,6 +194,17 @@
             svg.select(".y")
                 .call(d3.axisLeft(y_scale));
 
+            // ----------------------------------------
+            // Updating the Mask
+            // ----------------------------------------
+            console.log((this.ml_data).length);
+
+            let mask = this.ml_data.map(function(d){
+                return d[c_name] !==''
+            });
+            console.log(mask);
+            console.log(this.ml_data.filter(d => mask[d.id]));
+
 
             // ----------------------------------------
             // Binding the Data
@@ -195,10 +212,10 @@
             let t = d3.transition()
                 .duration(transition_time_ms);
 
-
             // Rejoin the Data
             let circles = svg.selectAll(".dot")
-                .data(this.ml_data,function(d) { return d.id; });
+                .data( this.ml_data.filter(d => mask[d.id]) ,
+                      function(d) { return d.id; });
 
             //remove unneeded bars
             circles.exit()
@@ -216,7 +233,7 @@
                 .attr('fill', function(d) { return c_scale(d[c_name]); } )
                 .attr("data_id",function(d) { return d.id; })
                 .on("mouseover", show_tip)
-                .on("mouseout", hide_tip)
+                .on("mouseout", hide_tip);
 
 
             //Add new Bars
@@ -231,14 +248,14 @@
                 .on("mouseout", hide_tip)
                 .attr("r", 0.0)
                 .transition(t)
-                .attr("r", circle_size)
+                .attr("r", circle_size);
 
 
             console.log('end update plot');
         };
 
         // ----------------------------------------
-        //  Logic
+        //  Main
         // ----------------------------------------
 
         // Inits the axis stuff in the plot
