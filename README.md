@@ -2,7 +2,7 @@
 This is repository designed as a sandbox to play with javascript, 
 primarily to get up and running with d3 and other visualization libs
 
-A demo d3 visualization can be viewed at:
+A demo d3 visualization I made in this repo can be viewed at:
 https://tychonautvii.github.io/learn_d3/
 
 # Sources
