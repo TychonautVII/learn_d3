@@ -59,10 +59,8 @@
             // Sizing and Placing the Chart
             // ----------------------------------------
 
-            // TODO Probs need to Not append an object here, but update it
-
             // add the x Axis
-            svg.select(".x") // TODO Why is this the select statement for the class y axis?
+            svg.select(".x")
                 .call(d3.axisBottom(x_scale));
 
             // add the y Axis
@@ -94,7 +92,7 @@
                 .attr("height", function(d) { return  height - y_scale(d.count); });
 
             //Add new Bars
-            bars.enter().append("rect") //TODO What is rect doing here?
+            bars.enter().append("rect")
                 .attr("class", "bar") // This is what the style sheet grabs
                 .attr("x", function(d) {return x_scale(d.product);})
                 .attr("width", x_scale.bandwidth() )

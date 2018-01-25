@@ -87,7 +87,6 @@
 
 
         function show_tip(d){
-            console.log(d);
             d3.select(".tooltip")
                 .style("opacity", tt_opacity)
                 .html(row_2_html_table(d))
@@ -244,7 +243,7 @@
                  .attr("r", circle_size)
                  .attr("opacity",circle_opacity);
 
-            //TODO lean usecase for merge
+            // TODO consider using merge
 
             update.transition(t)
                 .attr("opacity",circle_opacity)

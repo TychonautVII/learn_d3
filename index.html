@@ -25,7 +25,7 @@
           ng-controller="Inputer as Inputer"
           ng-submit="Inputer.addInput(Plotter)">
 
-        <!--TODO move all this logic into the javacript using repeats and expressions and such-->
+        <!--TODO move all this logic into the javacript using angular repeats and expressions and such-->
         <label for="x_ax_in">X Axis</label>
         <select ng-model="Inputer.x_data_name" id="x_ax_in" selected="mean_train_score">
             <option value="mean_test_score">Test Score Mean</option>
@@ -64,6 +64,7 @@
         <p>The data I'm plotting comes from an experiment I did where I applied machine learning to the problem of identifying heart disease from a series of physiological measurements. In that experiment I played with Perceptrons, Gaussian Mixtures, and Support Vector Classifiers, as well as various pre-processing techniques like PCA. The physiological data comes from a simple open dataset. </p>
         <p>In total 3081 Models were trained, 25 times each for cross validation. Statistics on performance of each of these 3081 models across the 25 cross validation runs are displayed above.</p>
         <p>My python code for the machine learning is available <a href =https://github.com/TychonautVII/heart_disease_dm>here</a></p>
+        <p>The javascript code for this visualization is available <a href=https://github.com/TychonautVII/learn_d3></a></p>
         <p>Data Available at the UCI machine learning repository <a href =https://archive.ics.uci.edu/ml/datasets/Heart+Disease >here</a></p>
     </div>
 
